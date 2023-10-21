@@ -14,7 +14,7 @@ except ImportError:
 
 p = Popen(["sh", "./stream-rtsp.sh", "&"], stdout=DEVNULL, stderr=STDOUT)
 
-time.sleep(5)
+time.sleep(10)
 
 app = Flask(__name__)
 
