@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from flask import Flask, Response
 from datetime import datetime
+import time
 
 from subprocess import Popen, STDOUT
 
@@ -12,6 +13,8 @@ except ImportError:
     DEVNULL = open(os.devnull, 'wb')
 
 p = Popen(["sh", "./stream-rtsp.sh", "&"], stdout=DEVNULL, stderr=STDOUT)
+
+time.sleep(5)
 
 app = Flask(__name__)
 
