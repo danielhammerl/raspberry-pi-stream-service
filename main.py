@@ -12,7 +12,7 @@ except ImportError:
     import os
     DEVNULL = open(os.devnull, 'wb')
 
-p = Popen(["sh", "./stream-rtsp.sh", "&"], stdout=STDOUT, stderr=STDOUT)
+p = Popen(["sh", "./stream-rtsp.sh", "&"])
 
 time.sleep(10)
 
