@@ -11,7 +11,7 @@ except ImportError:
     import os
     DEVNULL = open(os.devnull, 'wb')
 
-p = Popen(["sh", "./stream-rtsp.sh", "&"], stdout=DEVNULL, stderr=STDOUT))
+p = Popen(["sh", "./stream-rtsp.sh", "&"], stdout=DEVNULL, stderr=STDOUT)
 
 app = Flask(__name__)
 
