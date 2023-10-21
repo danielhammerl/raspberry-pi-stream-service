@@ -37,10 +37,7 @@ def generate_frames():
         # Overlay the timestamp on the frame
         cv2.putText(frame, timestamp, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
-        ret, buffer = cv2.imencode('.jpg', frame)
-        if not ret:
-            continue
-        frame = buffer.tobytes()
+
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
