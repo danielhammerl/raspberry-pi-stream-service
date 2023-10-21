@@ -10,7 +10,6 @@ def get_current_timestamp():
     timestamp = now.strftime("%d.%m.%Y %H:%M:%S")
     return timestamp
 
-# Replace 'rtsp://your_stream_url' with the RTSP stream URL you want to capture.
 rtsp_url = 'rtsp://localhost:8554/stream'
 cap = cv2.VideoCapture(rtsp_url)
 
