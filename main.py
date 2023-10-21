@@ -3,8 +3,15 @@ import numpy as np
 from flask import Flask, Response
 from datetime import datetime
 
-from subprocess import Popen
-p = Popen("./stream-rtsp.sh &")
+from subprocess import Popen, STDOUT
+
+try:
+    from subprocess import DEVNULL # py3k
+except ImportError:
+    import os
+    DEVNULL = open(os.devnull, 'wb')
+
+p = Popen(["sh", "./stream-rtsp.sh", "&"], stdout=DEVNULL, stderr=STDOUT))
 
 app = Flask(__name__)
 
