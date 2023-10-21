@@ -7,12 +7,12 @@ import time
 from subprocess import Popen, STDOUT
 
 try:
-    from subprocess import DEVNULL # py3k
+    from subprocess import DEVNULL
 except ImportError:
     import os
     DEVNULL = open(os.devnull, 'wb')
 
-p = Popen(["sh", "./stream-rtsp.sh", "&"], stdout=DEVNULL, stderr=STDOUT)
+p = Popen(["sh", "./stream-rtsp.sh", "&"], stdout=STDOUT, stderr=STDOUT)
 
 time.sleep(10)
 
