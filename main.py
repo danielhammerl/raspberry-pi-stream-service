@@ -3,6 +3,9 @@ import numpy as np
 from flask import Flask, Response
 from datetime import datetime
 
+from subprocess import Popen
+p = Popen("./stream-rtsp.sh &")
+
 app = Flask(__name__)
 
 def get_current_timestamp():
@@ -38,3 +41,5 @@ def video_feed():
 if __name__ == '__main__':
     from waitress import serve
     serve(app, host='0.0.0.0', port=8080)
+
+    p.terminate()
