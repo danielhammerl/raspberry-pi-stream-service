@@ -1,20 +1,21 @@
 import cv2
-import numpy as np
 from flask import Flask, Response
 from datetime import datetime
 import time
+import os
 
-from subprocess import Popen, STDOUT
-
+dev_mode = True
 try:
-    from subprocess import DEVNULL
-except ImportError:
-    import os
-    DEVNULL = open(os.devnull, 'wb')
+    stream_url = os.environ["STREAM_URL"]
+except KeyError:
+    dev_mode = False
 
-p = Popen(["sh", "./stream-rtsp.sh", "&"])
+if dev_mode == False:
+    from subprocess import Popen
 
-time.sleep(10)
+    p = Popen(["sh", "./stream-rtsp.sh"])
+
+    time.sleep(10)
 
 app = Flask(__name__)
 
@@ -23,7 +24,8 @@ def get_current_timestamp():
     timestamp = now.strftime("%d.%m.%Y %H:%M:%S")
     return timestamp
 
-rtsp_url = 'rtsp://localhost:8554/stream'
+rtsp_url = stream_url if dev_mode else 'tcp://localhost:8081'
+print("rtsp url is: ", rtsp_url)
 cap = cv2.VideoCapture(rtsp_url)
 
 def generate_frames():
@@ -46,10 +48,14 @@ def generate_frames():
 
 @app.route('/')
 def video_feed():
-    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    response = Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+    return response
 
 if __name__ == '__main__':
     from waitress import serve
     serve(app, host='0.0.0.0', port=8080)
-
-    p.terminate()
+    print("Server started")
+    try:
+        p.terminate()
+    except NameError:
+        pass
