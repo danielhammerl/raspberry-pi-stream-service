@@ -11,9 +11,9 @@ except KeyError:
     dev_mode = False
 
 if dev_mode == False:
-    from subprocess import Popen
+    from subprocess import Popen, DEVNULL
 
-    p = Popen(["sh", "./stream-rtsp.sh"])
+    p = Popen(["sh", "./stream-rtsp.sh"], stdout=DEVNULL)
 
     time.sleep(10)
 
